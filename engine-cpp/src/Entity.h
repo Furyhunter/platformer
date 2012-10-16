@@ -3,14 +3,13 @@
 class Entity {
 public:
 	Entity* next;
-	Entity* previous;
 
 	Entity(void);
 	~Entity(void);
 	
-	virtual void create();
-	virtual void step();
-	virtual void draw();
-	virtual void destroy();
+	virtual void create() = 0;
+	virtual void step() = 0;
+	virtual void draw() = 0;
+	virtual void destroy() = 0;
 };
 

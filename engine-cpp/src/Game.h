@@ -2,6 +2,8 @@
 
 #include <SDL.h>
 
+#include "Entity.h"
+
 class Game {
 public:
 	Game(void);
@@ -10,15 +12,18 @@ public:
 	/**
 		Initializes the game.
 	*/
-	void init();
+	virtual void init();
 
-	void run();
+	virtual void run();
 
+	int getTargetTPS();
+	void setTargetTPS();
 protected:
 	bool initialized;
 
 private:
 	SDL_Surface* surface;
 	bool running;
+	Entity* first;
+	int targetDelay;
 };
-
