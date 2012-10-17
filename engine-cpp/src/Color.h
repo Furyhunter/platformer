@@ -16,4 +16,5 @@ public:
 
 	// Operator overloading
 	Color& operator=(const Color& c);
+	bool operator==(const Color& c);
 };
