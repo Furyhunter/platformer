@@ -4,9 +4,10 @@
 
 class Graphics {
 public:
-	virtual void setColor(const Color& c);
-	virtual void drawRect(float x, float y, float w, float h);
-	virtual void fillRect(float x, float y, float w, float h);
+	Graphics();
+	void setColor(const Color& c);
+	void drawRect(float x, float y, float w, float h);
+	void fillRect(float x, float y, float w, float h);
 
 private:
 	void _setGlColor();

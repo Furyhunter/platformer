@@ -2,6 +2,10 @@
 
 #include <SDL_opengl.h>
 
+Graphics::Graphics() : color(1, 1, 1, 1) {
+	_setGlColor();
+}
+
 void Graphics::setColor(const Color& c) {
 	color = c;
 	_setGlColor();

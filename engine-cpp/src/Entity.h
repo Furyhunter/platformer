@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Vector2f.h"
+#include "Graphics.h"
+
+class Game;
 
 class Entity {
 public:
@@ -13,10 +16,10 @@ public:
 	Entity(const Vector2f& position);
 	~Entity();
 	
-	virtual void create() = 0;
-	virtual void step() = 0;
-	virtual void draw() = 0;
-	virtual void destroy() = 0;
+	virtual void create(Game& game) = 0;
+	virtual void step(Game& game, float delta) = 0;
+	virtual void draw(Game& game, Graphics& graphics) = 0;
+	virtual void destroy(Game& game) = 0;
 	virtual void collide() = 0;
 };
 

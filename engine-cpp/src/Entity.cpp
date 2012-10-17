@@ -1,5 +1,6 @@
 #include "Entity.h"
 
+#include "Game.h"
 
 Entity::Entity() : position(0, 0) {
 	

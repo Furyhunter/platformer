@@ -2,7 +2,11 @@
 
 #include <SDL.h>
 
-#include "Entity.h"
+#include "Graphics.h"
+
+#define TPF 1000/60
+
+class Entity;
 
 class Game {
 public:
@@ -25,4 +29,5 @@ private:
 	SDL_Surface* surface;
 	bool running;
 	Entity* first;
+	Graphics g;
 };

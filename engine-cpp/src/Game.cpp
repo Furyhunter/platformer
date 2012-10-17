@@ -1,9 +1,11 @@
 #include "Game.h"
 
+#include "Entity.h"
 
 Game::Game(void) {
 	first = NULL;
 	surface = NULL;
+	initialized = false;
 }
 
 Game::~Game(void) {
@@ -37,27 +39,51 @@ void Game::init() {
 }
 
 void Game::run() {
+	Entity* itr;
+	int before, after, diff;
+	SDL_Event evt;
+
 	if (!initialized) {
 		printf("Error: not initialized\n");
+		return;
 	}
-	Entity* itr;
 
 	running = true;
 
 	while (running) {
+		before = SDL_GetTicks();
+
+		// event handling
+		while (SDL_PollEvent(&evt)) {
+			switch (evt.type) {
+			case SDL_QUIT:
+				running = false;
+				break;
+			}
+		}
 		// logic step
 		itr = first;
 		while (itr != NULL) {
-			itr->step();
+			itr->step(*this, 1.f/60);
 			itr = itr->next;
 		}
 		
 		// draw step
 		itr = first;
 		while (itr != NULL) {
-			itr->draw();
+			itr->draw(*this, g);
 			itr = itr->next;
 		}
+
+		SDL_GL_SwapBuffers();
+		SDL_Flip(surface);
+
 		// delay step (if needed)
+		after = SDL_GetTicks();
+		diff = after - before;
+
+		if (diff < TPF) {
+			SDL_Delay(TPF - diff);
+		}
 	}
 }
