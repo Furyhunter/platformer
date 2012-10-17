@@ -1,13 +1,14 @@
 #pragma once
 
 #include <string>
+#include <SDL.h>
 
 using namespace std;
 
 class Texture {
 public:
 	Texture(const char* path);
-	Texture::Texture(SDL_Surface& surface);
+	Texture(SDL_Surface& surface);
 	~Texture();
 
 	void bind();
@@ -17,7 +18,11 @@ public:
 	unsigned int getWidth() { return width; }
 	unsigned int getHeight() { return height; }
 
+	static void unbindTexture();
+
 private:
+	
+
 	SDL_Surface* surface;
 	bool bound;
 	unsigned int name;
@@ -26,6 +31,4 @@ private:
 	unsigned int height;
 
 	void _loadTexture(SDL_Surface& surface);
-
-	static Texture* currentlyBound;
 };

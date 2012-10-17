@@ -22,6 +22,8 @@ public:
 
 	int getTargetTPS();
 	void setTargetTPS();
+	unsigned int getInternalWidth() { return internalWidth; }
+	unsigned int getInternalHeight() { return internalHeight; }
 
 	void addEntity(Entity& ent);
 	void removeEntity(Entity& ent);
@@ -35,4 +37,8 @@ private:
 	Entity* first;
 	Entity* last;
 	Graphics g;
+	unsigned int internalWidth;
+	unsigned int internalHeight;
+	unsigned int fboName;
+	unsigned int renderName;
 };

@@ -4,6 +4,8 @@
 #include <SDL_opengl.h>
 #include <SDL_image.h>
 
+Texture* currentlyBoundTexture = NULL;
+
 Texture::Texture(const char* path) {
 	bound = false;
 	name = -1;
@@ -34,8 +36,10 @@ Texture::~Texture() {
 void Texture::bind() {
 	if (name >= 0 && !bound) {
 		glBindTexture(GL_TEXTURE_2D, name);
-		currentlyBound->bound = false;
-		currentlyBound = this;
+		if (currentlyBoundTexture != NULL) {
+			currentlyBoundTexture->bound = false;
+		}
+		currentlyBoundTexture = this;
 		bound = true;
 	}
 }
@@ -43,12 +47,12 @@ void Texture::bind() {
 void Texture::_loadTexture(SDL_Surface& surface) {
 	int internal_format;
 	int pixel_format;
-	Texture* lastBound;
+	Texture* lastBound = NULL;
 
 	// gen texture
 	glGenTextures(1, &name);
-	if (currentlyBound != NULL) {
-		lastBound = currentlyBound;
+	if (currentlyBoundTexture != NULL) {
+		lastBound = currentlyBoundTexture;
 	}
 	bind();
 
@@ -73,5 +77,13 @@ void Texture::_loadTexture(SDL_Surface& surface) {
 	// rebind last bound if exists
 	if (lastBound != NULL) {
 		lastBound->bind();
+	}
+}
+
+void Texture::unbindTexture() {
+	glBindTexture(GL_TEXTURE_2D, 0);
+	if (currentlyBoundTexture != NULL) {
+		currentlyBoundTexture->bound = false;
+		currentlyBoundTexture = NULL;
 	}
 }

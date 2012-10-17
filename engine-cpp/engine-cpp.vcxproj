@@ -17,7 +17,8 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\Rectangle.cpp" />
+    <ClCompile Include="src\AABB.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -26,7 +27,8 @@
     <ClInclude Include="src\exmath.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
-    <ClInclude Include="src\Rectangle.h" />
+    <ClInclude Include="src\AABB.h" />
+    <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\Vector2f.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -58,12 +60,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(SolutionDir)SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)glew-1.9.0\include;$(SolutionDir)SDL_image\include;$(SolutionDir)SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)glew-1.9.0\lib\;$(SolutionDir)SDL_image\lib\x86;$(SolutionDir)SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>$(SolutionDir)SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)glew-1.9.0\include;$(SolutionDir)SDL_image\include;$(SolutionDir)SDL\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)glew-1.9.0\lib\;$(SolutionDir)SDL_image\lib\x86;$(SolutionDir)SDL\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -72,7 +74,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_image.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
@@ -87,7 +89,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_image.lib;opengl32.lib;glew32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Windows</SubSystem>
     </Link>
   </ItemDefinitionGroup>

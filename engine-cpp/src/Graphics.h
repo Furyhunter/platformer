@@ -15,6 +15,7 @@ public:
 	void fillRect(float x, float y, float w, float h);
 	void fillRect(const AABB& r);
 	void drawTexture(float x, float y, Texture& texture);
+	void drawTexture(float x, float y, float w, float h, unsigned int glName);
 
 private:
 	void _setGlColor();

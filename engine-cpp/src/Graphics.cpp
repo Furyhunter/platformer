@@ -15,9 +15,9 @@ void Graphics::setColor(const Color& c) {
 }
 
 void Graphics::drawRect(float x, float y, float w, float h) {
-	glPolygonMode(GL_FRONT, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	fillRect(x, y, w, h);
-	glPolygonMode(GL_FRONT, GL_FILL);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 void Graphics::drawRect(const AABB& r) {
@@ -25,10 +25,13 @@ void Graphics::drawRect(const AABB& r) {
 }
 
 void Graphics::fillRect(float x, float y, float w, float h) {
-	static float verts[8] = {0, 0, 0, 1, 1, 0, 1, 1};
+	static float verts[8] = {0, 0, 0, 1, 1, 1, 1, 0};
+	static float tex[8] = {0, 0, 0, 1, 1, 1, 1, 0};
 
 	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, verts);
+	glTexCoordPointer(2, GL_FLOAT, 0, tex);
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -37,6 +40,7 @@ void Graphics::fillRect(float x, float y, float w, float h) {
 	glDrawArrays(GL_QUADS, 0, 4);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Graphics::fillRect(const AABB& r) {
@@ -47,6 +51,14 @@ void Graphics::drawTexture(float x, float y, Texture& texture) {
 	glEnable(GL_TEXTURE_2D);
 	texture.bind();
 	fillRect(x, y, texture.getWidth(), texture.getHeight());
+	glDisable(GL_TEXTURE_2D);
+}
+
+void Graphics::drawTexture(float x, float y, float w, float h, unsigned int glName) {
+	glEnable(GL_TEXTURE_2D);
+	Texture::unbindTexture();
+	glBindTexture(GL_TEXTURE_2D, glName);
+	fillRect(x, y, w, h);
 	glDisable(GL_TEXTURE_2D);
 }
 
