@@ -2,6 +2,8 @@
 
 #include <SDL_opengl.h>
 
+#include "AABB.h"
+
 Graphics::Graphics() : color(1, 1, 1, 1) {
 	_setGlColor();
 }
@@ -17,6 +19,10 @@ void Graphics::drawRect(float x, float y, float w, float h) {
 	glPolygonMode(GL_FRONT, GL_FILL);
 }
 
+void Graphics::drawRect(const AABB& r) {
+	drawRect(r.position.x, r.position.y, r.dimensions.x, r.dimensions.y);
+}
+
 void Graphics::fillRect(float x, float y, float w, float h) {
 	static float verts[8] = {0, 0, 0, 1, 1, 0, 1, 1};
 
@@ -30,6 +36,10 @@ void Graphics::fillRect(float x, float y, float w, float h) {
 	glDrawArrays(GL_QUADS, 0, 4);
 
 	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+void Graphics::fillRect(const AABB& r) {
+	fillRect(r.position.x, r.position.y, r.dimensions.x, r.dimensions.y);
 }
 
 void Graphics::_setGlColor() {

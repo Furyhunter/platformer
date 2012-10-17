@@ -1,34 +1,34 @@
-#include "Rectangle.h"
+#include "AABB.h"
 
-Rectangle::Rectangle(float x, float y, float w, float h) :
+AABB::AABB(float x, float y, float w, float h) :
 	position(x, y),
 	dimensions(w, h) {
 	
 }
 
-Rectangle::Rectangle(const Vector2f& pos, const Vector2f& dim) :
+AABB::AABB(const Vector2f& pos, const Vector2f& dim) :
 	position(pos),
 	dimensions(dim) {
 	
 }
 
-float Rectangle::minX() {
+float AABB::minX() {
 	return position.x;
 }
 
-float Rectangle::maxX() {
+float AABB::maxX() {
 	return position.x + dimensions.x;
 }
 
-float Rectangle::minY() {
+float AABB::minY() {
 	return position.y;
 }
 
-float Rectangle::maxY() {
+float AABB::maxY() {
 	return position.y + dimensions.y;
 }
 
-bool Rectangle::overlapping(Rectangle& other) {
+bool AABB::overlapping(AABB& other) {
 	if (maxX() < other.minX() ||
 		minX() > other.maxX() ||
 		maxY() < other.minY() ||
@@ -38,7 +38,7 @@ bool Rectangle::overlapping(Rectangle& other) {
 	return true;
 }
 
-Vector2f Rectangle::collideWith(Rectangle& other) {
+Vector2f AABB::collideWith(AABB& other) {
 	Vector2f ret(0, 0);
 
 	return ret;
