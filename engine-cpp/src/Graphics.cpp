@@ -2,6 +2,7 @@
 
 #include <SDL_opengl.h>
 
+#include "Texture.h"
 #include "AABB.h"
 
 Graphics::Graphics() : color(1, 1, 1, 1) {
@@ -40,6 +41,13 @@ void Graphics::fillRect(float x, float y, float w, float h) {
 
 void Graphics::fillRect(const AABB& r) {
 	fillRect(r.position.x, r.position.y, r.dimensions.x, r.dimensions.y);
+}
+
+void Graphics::drawTexture(float x, float y, Texture& texture) {
+	glEnable(GL_TEXTURE_2D);
+	texture.bind();
+	fillRect(x, y, texture.getWidth(), texture.getHeight());
+	glDisable(GL_TEXTURE_2D);
 }
 
 void Graphics::_setGlColor() {

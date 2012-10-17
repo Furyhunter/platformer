@@ -14,11 +14,16 @@ public:
 
 	bool isBound() { return bound; }
 	string getSource() { return source; }
+	unsigned int getWidth() { return width; }
+	unsigned int getHeight() { return height; }
+
 private:
 	SDL_Surface* surface;
 	bool bound;
 	unsigned int name;
 	string source;
+	unsigned int width;
+	unsigned int height;
 
 	void _loadTexture(SDL_Surface& surface);
 

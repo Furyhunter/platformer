@@ -10,6 +10,8 @@ Texture::Texture(const char* path) {
 	source = path;
 
 	surface = IMG_Load(path);
+	width = surface->w;
+	height = surface->h;
 	_loadTexture(*surface);
 }
 
@@ -19,6 +21,8 @@ Texture::Texture(SDL_Surface& surface) {
 	source = "";
 
 	this->surface = &surface;
+	width = surface.w;
+	height = surface.h;
 	_loadTexture(surface);
 }
 
