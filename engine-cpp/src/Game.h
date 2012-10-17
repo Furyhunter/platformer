@@ -25,5 +25,4 @@ private:
 	SDL_Surface* surface;
 	bool running;
 	Entity* first;
-	int targetDelay;
 };

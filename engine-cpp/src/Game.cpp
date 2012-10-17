@@ -4,8 +4,6 @@
 Game::Game(void) {
 	first = NULL;
 	surface = NULL;
-
-	targetTps = 60;
 }
 
 Game::~Game(void) {
@@ -55,7 +53,11 @@ void Game::run() {
 		}
 		
 		// draw step
-
+		itr = first;
+		while (itr != NULL) {
+			itr->draw();
+			itr = itr->next;
+		}
 		// delay step (if needed)
 	}
 }

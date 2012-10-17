@@ -11,13 +11,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Color.cpp" />
     <ClCompile Include="src\Entity.cpp" />
+    <ClCompile Include="src\exmath.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Graphics.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Rectangle.cpp" />
+    <ClCompile Include="src\Vector2f.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Color.h" />
     <ClInclude Include="src\Entity.h" />
+    <ClInclude Include="src\exmath.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Graphics.h" />
+    <ClInclude Include="src\Rectangle.h" />
+    <ClInclude Include="src\Vector2f.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{ABFDCB0F-DD65-453F-87D3-57D3CFA9C8BC}</ProjectGuid>
