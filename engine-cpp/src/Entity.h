@@ -1,14 +1,13 @@
 #pragma once
 
 #include "Vector2f.h"
-#include "Graphics.h"
 
 class Game;
+class Graphics;
 
 class Entity {
 public:
-	Entity* next;
-	Entity* previous;
+	friend Game;
 	Vector2f position;
 
 	Entity();
@@ -21,5 +20,8 @@ public:
 	virtual void draw(Game& game, Graphics& graphics) = 0;
 	virtual void destroy(Game& game) = 0;
 	virtual void collide() = 0;
+private:
+	Entity* next;
+	Entity* previous;
 };
 

@@ -38,6 +38,26 @@ void Game::init() {
 	initialized = true;
 }
 
+void Game::addEntity(Entity& ent) {
+	if (first == NULL) {
+		first = &ent;
+		last = &ent;
+	}
+
+	last->previous = last;
+	last = &ent;
+}
+
+void Game::removeEntity(Entity& ent) {
+	ent.next->previous = ent.previous;
+	ent.previous->next = ent.next;
+
+	ent.previous = NULL;
+	ent.next = NULL;
+
+	// Make sure to delete when you're done with it!
+}
+
 void Game::run() {
 	Entity* itr;
 	int before, after, diff;
@@ -58,6 +78,9 @@ void Game::run() {
 			switch (evt.type) {
 			case SDL_QUIT:
 				running = false;
+				break;
+			case SDL_KEYDOWN:
+
 				break;
 			}
 		}

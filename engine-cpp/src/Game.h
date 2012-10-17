@@ -22,6 +22,10 @@ public:
 
 	int getTargetTPS();
 	void setTargetTPS();
+
+	void addEntity(Entity& ent);
+	void removeEntity(Entity& ent);
+
 protected:
 	bool initialized;
 
@@ -29,5 +33,6 @@ private:
 	SDL_Surface* surface;
 	bool running;
 	Entity* first;
+	Entity* last;
 	Graphics g;
 };
