@@ -133,8 +133,6 @@ void Game::run() {
 			itr->draw(*this, g);
 			itr = itr->next;
 		}
-		g.drawTexture(0, 0, pic); // test
-		g.drawRect(64, 64, 32, 32);
 
 		// draw fbo to screen
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
