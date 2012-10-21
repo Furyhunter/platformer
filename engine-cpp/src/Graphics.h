@@ -18,7 +18,7 @@ public:
 	void drawTexture(float x, float y, Texture& texture);
 	void drawTexture(float x, float y, float w, float h, unsigned int glName);
 
-	bool round;
+	bool roundCoordinates;
 	Vector2f translation;
 
 private:
