@@ -18,11 +18,11 @@ public:
 	void drawTexture(float x, float y, Texture& texture);
 	void drawTexture(float x, float y, float w, float h, unsigned int glName);
 
-	void setTranslation(const Vector2f& vec) { translation = vec; }
-	Vector2f getTranslation() { return translation; }
+	bool round;
+	Vector2f translation;
 
 private:
 	void _setGlColor();
+	void _translateVector();
 	Color color;
-	Vector2f translation;
 };

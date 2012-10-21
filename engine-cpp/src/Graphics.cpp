@@ -4,6 +4,7 @@
 
 #include "Texture.h"
 #include "AABB.h"
+#include "exmath.h"
 
 Graphics::Graphics() : color(1, 1, 1, 1) {
 	_setGlColor();
@@ -32,6 +33,13 @@ void Graphics::fillRect(float x, float y, float w, float h) {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, verts);
 	glTexCoordPointer(2, GL_FLOAT, 0, tex);
+
+	if (roundCoordinates) {
+		x = round(x);
+		y = round(y);
+		w = round(w);
+		h = round(h);
+	}
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
@@ -73,5 +81,9 @@ void Graphics::_setGlColor() {
 }
 
 void Graphics::_translateVector() {
-	glTranslatef(translation.x, translation.y, 0);
+	if (roundCoordinates) {
+		glTranslatef(round(translation.x), round(translation.y), 0);
+	} else {
+		glTranslatef(translation.x, translation.y, 0);
+	}
 }
