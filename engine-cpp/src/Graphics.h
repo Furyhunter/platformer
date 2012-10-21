@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Color.h"
+#include "Vector2f.h"
 
 class AABB;
 class Texture;
@@ -17,7 +18,11 @@ public:
 	void drawTexture(float x, float y, Texture& texture);
 	void drawTexture(float x, float y, float w, float h, unsigned int glName);
 
+	void setTranslation(const Vector2f& vec) { translation = vec; }
+	Vector2f getTranslation() { return translation; }
+
 private:
 	void _setGlColor();
 	Color color;
+	Vector2f translation;
 };

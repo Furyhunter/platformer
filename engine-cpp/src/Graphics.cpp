@@ -35,6 +35,7 @@ void Graphics::fillRect(float x, float y, float w, float h) {
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	_translateVector();
 	glTranslatef(x, y, 0);
 	glScalef(w, h, 1);
 	glDrawArrays(GL_QUADS, 0, 4);
@@ -69,4 +70,8 @@ void Graphics::_setGlColor() {
 		glDisable(GL_BLEND);
 	}
 	glColor4f(color.r, color.g, color.b, color.a);
+}
+
+void Graphics::_translateVector() {
+	glTranslatef(translation.x, translation.y, 0);
 }
