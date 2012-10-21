@@ -1,6 +1,6 @@
 #include "Game.h"
 
-#include <GL\glew.h>
+#include <SDL_opengl.h>
 
 #include "Entity.h"
 #include "Texture.h"
@@ -36,29 +36,6 @@ void Game::init() {
 
 	if (surface == NULL) {
 		printf("Failed to set SDL video mode\n");
-		return;
-	}
-	
-	if (glewInit() != GLEW_OK) {
-		printf("Shit.\n");
-		return;
-	}
-
-	// build fbo
-	glDisable(GL_DEPTH_TEST);
-
-	glGenFramebuffersEXT(1, &fboName);
-	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboName);
-	glGenTextures(1, &renderName);
-	glBindTexture(GL_TEXTURE_2D, renderName);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, internalWidth, internalHeight,
-		0, GL_RGBA, GL_INT, NULL);
-	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT,
-		GL_TEXTURE_2D, renderName, 0);
-	if (glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT) != GL_FRAMEBUFFER_COMPLETE_EXT) {
-		printf("Framebuffer failed\n");
 		return;
 	}
 	
@@ -121,26 +98,15 @@ void Game::run() {
 		}
 		
 		// draw step
-		Texture::unbindTexture();
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fboName);
-		glClear(GL_COLOR_BUFFER_BIT);
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
-		glOrtho(0, internalWidth, 0, internalHeight, -1, 1);
+		glOrtho(0, internalWidth, internalHeight, 0, -1, 1);
 
 		itr = first;
 		while (itr != NULL) {
 			itr->draw(*this, g);
 			itr = itr->next;
 		}
-
-		// draw fbo to screen
-		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
-		glMatrixMode(GL_PROJECTION);
-		glLoadIdentity();
-		glOrtho(0, surface->w, surface->h, 0, -1, 1);
-		g.setColor(Color(1, 1, 1, 1));
-		g.drawTexture(0, 0, surface->w, surface->h, renderName);
 
 		SDL_GL_SwapBuffers();
 		SDL_Flip(surface);
