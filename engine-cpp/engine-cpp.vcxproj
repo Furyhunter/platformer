@@ -28,6 +28,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics.h" />
     <ClInclude Include="src\AABB.h" />
+    <ClInclude Include="src\IInputListener.h" />
     <ClInclude Include="src\Texture.h" />
     <ClInclude Include="src\Vector2f.h" />
   </ItemGroup>
