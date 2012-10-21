@@ -5,14 +5,19 @@
 #include "Entity.h"
 #include "Texture.h"
 
-Game::Game(void) {
+Game::Game(unsigned int width, unsigned int height, unsigned int iWidth,
+		   unsigned int iHeight) {
 	first = NULL;
 	last = NULL;
 	surface = NULL;
 	initialized = false;
 	running = false;
-	internalWidth = 320;
-	internalHeight = 200;
+	this->width = width;
+	this->height = height;
+	internalWidth = iWidth;
+	internalHeight = iHeight;
+	fullscreen = false;
+	caption = "";
 }
 
 Game::~Game(void) {
@@ -20,6 +25,7 @@ Game::~Game(void) {
 }
 
 void Game::init() {
+	int flags = SDL_OPENGL;
 	if (initialized) {
 		return;
 	}
@@ -32,7 +38,14 @@ void Game::init() {
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_SWAP_CONTROL, 1);
 
-	surface = SDL_SetVideoMode(640, 400, 32, SDL_OPENGL);
+	SDL_putenv("SDL_VIDEO_CENTERED=center");
+
+	if (fullscreen) {
+		flags |= SDL_FULLSCREEN;
+	}
+
+	surface = SDL_SetVideoMode(width, height, 32, flags);
+	SDL_WM_SetCaption(caption.c_str(), NULL);
 
 	if (surface == NULL) {
 		printf("Failed to set SDL video mode\n");
@@ -60,6 +73,13 @@ void Game::removeEntity(Entity& ent) {
 	ent.next = NULL;
 
 	// Make sure to delete when you're done with it!
+}
+
+void Game::setCaption(const char* cap) {
+	caption = cap;
+	if (initialized) {
+		SDL_WM_SetCaption(caption.c_str(), NULL);
+	}
 }
 
 void Game::run() {
