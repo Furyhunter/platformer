@@ -59,19 +59,26 @@ void Game::addEntity(Entity& ent) {
 	if (first == NULL) {
 		first = &ent;
 		last = &ent;
+	} else {
+		last->previous = last;
+		last = &ent;
 	}
-
-	last->previous = last;
-	last = &ent;
 }
 
 void Game::removeEntity(Entity& ent) {
-	ent.next->previous = ent.previous;
-	ent.previous->next = ent.next;
+	if (&ent == first) {
+		first = ent.next;
+		ent.next->previous = NULL;
+	} else if (&ent == last) {
+		last = ent.previous;
+		ent.previous->next = NULL;
+	} else {
+		ent.next->previous = ent.previous;
+		ent.previous->next = ent.next;
+	}
 
 	ent.previous = NULL;
 	ent.next = NULL;
-
 	// Make sure to delete when you're done with it!
 }
 
