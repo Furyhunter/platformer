@@ -1,7 +1,3 @@
-*.sdf
-*.opensdf
-*.suo
-
-Debug/*
-Release/*
-
+build/*
+*.kdev4
+*~
