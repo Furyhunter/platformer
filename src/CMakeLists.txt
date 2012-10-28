@@ -11,6 +11,7 @@ set(ENGINE_SOURCES
     exmath.cpp
     Game.cpp
     Graphics.cpp
+    LinkedList.cpp
     Texture.cpp
     Vector2f.cpp)
 
