@@ -27,28 +27,13 @@
 
 #pragma once
 
-#include "Vector2f.h"
+#include <Entity.h>
 
-class Game;
-class Graphics;
-
-class Entity {
+class Player : public Entity {
 public:
-    friend class Game;
-    Vector2f position;
+    Player();
 
-    Entity();
-    Entity(float x, float y);
-    Entity(const Vector2f& position);
-
-    virtual void create(Game& game) { };
-    virtual void step(Game& game, float delta) { };
-    virtual void draw(Game& game, Graphics& graphics) { };
-    virtual void destroy(Game& game) { };
-
-    bool operator==(const Entity& other) const;
-private:
-    Entity* next;
-    Entity* prev;
-    int guid;
+    virtual void create(Game& game);
+    virtual void step(Game& game, float delta);
+    virtual void draw(Game& game, Graphics& graphics);
 };

@@ -43,6 +43,8 @@ Game::Game(unsigned int width, unsigned int height, unsigned int iWidth,
     internalHeight = iHeight;
     fullscreen = false;
     caption = "";
+    first = 0;
+    last = 0;
 }
 
 Game::~Game(void) {
@@ -81,12 +83,44 @@ void Game::init() {
 }
 
 void Game::addEntity(Entity& ent) {
-    entities.push_back(ent);
+    if (first == 0) {
+        first = &ent;
+        last = first;
+    } else {
+        last->next = &ent;
+        ent.prev = last;
+        last = &ent;
+    }
 }
 
-void Game::removeEntity(Entity& ent) {
-    entities.remove(ent);
-    // Make sure to delete when you're done with it!
+bool Game::removeEntity(Entity& ent) {
+    Entity* itr = first;
+
+    if (first == 0) {
+        return false;
+    }
+
+    while (itr != 0) {
+        if (itr == &ent) {
+            if (itr == first) {
+                first = first->next;
+            } else if (itr == last) {
+                last = last->prev;
+            } else {
+                itr->prev->next = itr->next;
+                itr->next->prev = itr->prev;
+            }
+
+            itr->prev = 0;
+            itr->next = 0;
+            return true;
+        }
+        itr = itr->next;
+    }
+
+    return false;
+
+    // delete when done with it!
 }
 
 void Game::setCaption(const char* cap) {
@@ -99,7 +133,7 @@ void Game::setCaption(const char* cap) {
 void Game::run() {
     int before, after, diff;
     SDL_Event evt;
-    list<Entity>::iterator itr;
+    Entity* itr;
 
     if (!initialized) {
         printf("Error: not initialized\n");
@@ -124,17 +158,22 @@ void Game::run() {
         }
 
         // logic step
-        for (itr = entities.begin(); itr != entities.end(); itr++) {
+        itr = first;
+        while (itr != 0) {
             itr->step(*this, 1.f/60);
+            itr = itr->next;
         }
 
         // draw step
+        glClear(GL_COLOR_BUFFER_BIT);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         glOrtho(0, internalWidth, internalHeight, 0, -1, 1);
 
-        for (itr = entities.begin(); itr != entities.end(); itr++) {
+        itr = first;
+        while (itr != 0) {
             itr->draw(*this, g);
+            itr = itr->next;
         }
 
         SDL_GL_SwapBuffers();

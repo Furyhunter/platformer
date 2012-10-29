@@ -25,30 +25,23 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-#pragma once
+#include "Player.h"
+#include "Graphics.h"
+#include <cstdio>
 
-#include "Vector2f.h"
+Player::Player() : Entity(0, 0) {
 
-class Game;
-class Graphics;
+}
 
-class Entity {
-public:
-    friend class Game;
-    Vector2f position;
+void Player::create(Game& game) {
+    printf("burp\n");
+}
 
-    Entity();
-    Entity(float x, float y);
-    Entity(const Vector2f& position);
+void Player::step(Game& game, float delta) {
+    //printf("burp\n");
+    position.x += 32 * delta;
+}
 
-    virtual void create(Game& game) { };
-    virtual void step(Game& game, float delta) { };
-    virtual void draw(Game& game, Graphics& graphics) { };
-    virtual void destroy(Game& game) { };
-
-    bool operator==(const Entity& other) const;
-private:
-    Entity* next;
-    Entity* prev;
-    int guid;
-};
+void Player::draw(Game& game, Graphics& g) {
+    g.fillRect(position.x, position.y, 32, 32);
+}

@@ -34,14 +34,18 @@ int guidcounter = 0;
 
 Entity::Entity() : position(0, 0) {
     guid = guidcounter++;
+    next = 0;
+    prev = 0;
 }
 
 Entity::Entity(float x, float y) : position(x, y) {
-
+    next = 0;
+    prev = 0;
 }
 
 Entity::Entity(const Vector2f& pos) : position(pos) {
-
+    next = 0;
+    prev = 0;
 }
 
 bool Entity::operator==(const Entity& other) const {

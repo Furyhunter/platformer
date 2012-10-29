@@ -29,11 +29,15 @@
 
 #include <Game.h>
 
+#include "Player.h"
+
 int main(int argc, char** argv) {
     Game game = Game();
 
-    game.setCaption("engine-cpp game");
+    game.setCaption("game");
     game.init();
+    game.addEntity(Player());
+    game.getGraphics().roundCoordinates = false;
     game.run();
     exit(0);
     return 0;

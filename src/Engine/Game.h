@@ -28,7 +28,6 @@
 #pragma once
 
 #include <string>
-#include <list>
 
 #include <SDL.h>
 
@@ -70,8 +69,12 @@ public:
         return caption;
     }
 
+    Graphics& getGraphics() {
+        return g;
+    }
+
     void addEntity(Entity& ent);
-    void removeEntity(Entity& ent);
+    bool removeEntity(Entity& ent);
 
 protected:
     bool initialized;
@@ -80,7 +83,8 @@ private:
     SDL_Surface* surface;
     bool running;
     string caption;
-    list<Entity> entities;
+    Entity* first;
+    Entity* last;
     Graphics g;
     unsigned int width;
     unsigned int height;
