@@ -27,7 +27,7 @@
 
 #include <SDL.h>
 
-#include "Game.h"
+#include "Engine/Game.h"
 
 int main(int argc, char** argv) {
     Game game = Game();
