@@ -8,7 +8,6 @@ set(ENGINE_SOURCES
     exmath.cpp
     Game.cpp
     Graphics.cpp
-    LinkedList.cpp
     Texture.cpp
     Vector2f.cpp)
 	
@@ -19,9 +18,6 @@ set(ENGINE_HEADERS
 	exmath.h
 	Game.h
 	Graphics.h
-	IInputListener.h
-	LinkedList.h
-	List.h
 	Texture.h
 	Vector2f.h)
 

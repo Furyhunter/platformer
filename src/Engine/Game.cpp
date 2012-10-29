@@ -34,8 +34,6 @@
 
 Game::Game(unsigned int width, unsigned int height, unsigned int iWidth,
            unsigned int iHeight) {
-    first = NULL;
-    last = NULL;
     surface = NULL;
     initialized = false;
     running = false;
@@ -83,29 +81,11 @@ void Game::init() {
 }
 
 void Game::addEntity(Entity& ent) {
-    if (first == NULL) {
-        first = &ent;
-        last = &ent;
-    } else {
-        last->previous = last;
-        last = &ent;
-    }
+    entities.push_back(ent);
 }
 
 void Game::removeEntity(Entity& ent) {
-    if (&ent == first) {
-        first = ent.next;
-        ent.next->previous = NULL;
-    } else if (&ent == last) {
-        last = ent.previous;
-        ent.previous->next = NULL;
-    } else {
-        ent.next->previous = ent.previous;
-        ent.previous->next = ent.next;
-    }
-
-    ent.previous = NULL;
-    ent.next = NULL;
+    entities.remove(ent);
     // Make sure to delete when you're done with it!
 }
 
@@ -117,9 +97,9 @@ void Game::setCaption(const char* cap) {
 }
 
 void Game::run() {
-    Entity* itr;
     int before, after, diff;
     SDL_Event evt;
+    list<Entity>::iterator itr;
 
     if (!initialized) {
         printf("Error: not initialized\n");
@@ -142,11 +122,10 @@ void Game::run() {
                 break;
             }
         }
+
         // logic step
-        itr = first;
-        while (itr != NULL) {
+        for (itr = entities.begin(); itr != entities.end(); itr++) {
             itr->step(*this, 1.f/60);
-            itr = itr->next;
         }
 
         // draw step
@@ -154,10 +133,8 @@ void Game::run() {
         glLoadIdentity();
         glOrtho(0, internalWidth, internalHeight, 0, -1, 1);
 
-        itr = first;
-        while (itr != NULL) {
+        for (itr = entities.begin(); itr != entities.end(); itr++) {
             itr->draw(*this, g);
-            itr = itr->next;
         }
 
         SDL_GL_SwapBuffers();

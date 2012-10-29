@@ -34,21 +34,18 @@ class Graphics;
 
 class Entity {
 public:
-    friend class Game;
     Vector2f position;
 
     Entity();
     Entity(float x, float y);
     Entity(const Vector2f& position);
-    ~Entity();
 
-    virtual void create(Game& game) = 0;
-    virtual void step(Game& game, float delta) = 0;
-    virtual void draw(Game& game, Graphics& graphics) = 0;
-    virtual void destroy(Game& game) = 0;
-    virtual void collide() = 0;
+    virtual void create(Game& game) { };
+    virtual void step(Game& game, float delta) { };
+    virtual void draw(Game& game, Graphics& graphics) { };
+    virtual void destroy(Game& game) { };
+
+    bool operator==(const Entity& other) const;
 private:
-    Entity* next;
-    Entity* previous;
+    int guid;
 };
-

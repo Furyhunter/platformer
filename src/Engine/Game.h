@@ -28,16 +28,16 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 #include <SDL.h>
 
 #include "Graphics.h"
+#include "Entity.h"
 
 #define TPF 1000/60
 
 using namespace std;
-
-class Entity;
 
 class Game {
 public:
@@ -80,8 +80,7 @@ private:
     SDL_Surface* surface;
     bool running;
     string caption;
-    Entity* first;
-    Entity* last;
+    list<Entity> entities;
     Graphics g;
     unsigned int width;
     unsigned int height;
