@@ -15,6 +15,5 @@ set(ENGINE_SOURCES
     Texture.cpp
     Vector2f.cpp)
 
-add_executable(engine-cpp WIN32 MACOSX_BUNDLE ${ENGINE_SOURCES})
-target_link_libraries(engine-cpp ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY}
-${OPENGL_LIBRARY})
+add_executable(platformer WIN32 MACOSX_BUNDLE ${ENGINE_SOURCES})
+target_link_libraries(platformer ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY} ${OPENGL_LIBRARY})

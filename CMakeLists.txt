@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(engine-cpp)
+project(platformer)
 
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
