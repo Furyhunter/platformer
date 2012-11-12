@@ -4,7 +4,6 @@ include_directories(${SDLIMAGE_INCLUDE_DIR})
 set(ENGINE_SOURCES
     AABB.cpp
     Color.cpp
-    Entity.cpp
     exmath.cpp
     Game.cpp
     Graphics.cpp

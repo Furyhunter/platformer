@@ -28,17 +28,40 @@
 #include <SDL.h>
 
 #include <Game.h>
+#include <Entity.h>
+#include <Graphics.h>
+#include <AABB.h>
 
 #include "Player.h"
+
+class TestEntity : public Entity {
+public:
+    TestEntity() : Entity(), time(0) { }
+
+    virtual void step(Game& game, float delta) {
+        time += delta;
+        position.x = cos(time) * 64;
+        position.y = sin(time) * 64;
+    }
+
+    virtual void draw(Game& game, Graphics& gr) {
+        gr.drawRect(AABB(position.x, position.y, 32, 32));
+    }
+
+    float time;
+};
 
 int main(int argc, char** argv) {
     Game game = Game();
 
     game.setCaption("game");
     game.init();
-    game.addEntity(Player());
-    game.getGraphics().roundCoordinates = false;
+    game.addEntity(new Player());
+    for (int i = 0; i < 40; i++) {
+        game.addEntity(new TestEntity());
+    }
+
+    //game.getGraphics().roundCoordinates = false;
     game.run();
-    exit(0);
     return 0;
 }

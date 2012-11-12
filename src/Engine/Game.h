@@ -28,6 +28,7 @@
 #pragma once
 
 #include <string>
+#include <list>
 
 #include <SDL.h>
 
@@ -37,6 +38,8 @@
 #define TPF 1000/60
 
 using namespace std;
+
+typedef list<Entity*> EntityList;
 
 class Game {
 public:
@@ -73,8 +76,7 @@ public:
         return g;
     }
 
-    void addEntity(Entity& ent);
-    bool removeEntity(Entity& ent);
+    void addEntity(Entity* ent);
 
 protected:
     bool initialized;
@@ -83,9 +85,8 @@ private:
     SDL_Surface* surface;
     bool running;
     string caption;
-    Entity* first;
-    Entity* last;
     Graphics g;
+    EntityList ents;
     unsigned int width;
     unsigned int height;
     unsigned int internalWidth;

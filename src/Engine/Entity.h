@@ -37,18 +37,14 @@ public:
     friend class Game;
     Vector2f position;
 
-    Entity();
-    Entity(float x, float y);
-    Entity(const Vector2f& position);
+    Entity(const Vector2f& position = Vector2f()) : position(position), removeMe(false) { }
 
     virtual void create(Game& game) { };
     virtual void step(Game& game, float delta) { };
     virtual void draw(Game& game, Graphics& graphics) { };
     virtual void destroy(Game& game) { };
 
-    bool operator==(const Entity& other) const;
+    void remove() { removeMe = true; }
 private:
-    Entity* next;
-    Entity* prev;
-    int guid;
+    bool removeMe;
 };

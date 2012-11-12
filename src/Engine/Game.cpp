@@ -33,18 +33,10 @@
 #include "Texture.h"
 
 Game::Game(unsigned int width, unsigned int height, unsigned int iWidth,
-           unsigned int iHeight) {
-    surface = NULL;
-    initialized = false;
-    running = false;
-    this->width = width;
-    this->height = height;
-    internalWidth = iWidth;
-    internalHeight = iHeight;
-    fullscreen = false;
-    caption = "";
-    first = 0;
-    last = 0;
+           unsigned int iHeight) :
+        ents(), surface(0), initialized(false), running(false),
+        width(width), height(height), internalWidth(iWidth),
+        internalHeight(iHeight), fullscreen(false), caption("") {
 }
 
 Game::~Game(void) {
@@ -82,45 +74,8 @@ void Game::init() {
     initialized = true;
 }
 
-void Game::addEntity(Entity& ent) {
-    if (first == 0) {
-        first = &ent;
-        last = first;
-    } else {
-        last->next = &ent;
-        ent.prev = last;
-        last = &ent;
-    }
-}
-
-bool Game::removeEntity(Entity& ent) {
-    Entity* itr = first;
-
-    if (first == 0) {
-        return false;
-    }
-
-    while (itr != 0) {
-        if (itr == &ent) {
-            if (itr == first) {
-                first = first->next;
-            } else if (itr == last) {
-                last = last->prev;
-            } else {
-                itr->prev->next = itr->next;
-                itr->next->prev = itr->prev;
-            }
-
-            itr->prev = 0;
-            itr->next = 0;
-            return true;
-        }
-        itr = itr->next;
-    }
-
-    return false;
-
-    // delete when done with it!
+void Game::addEntity(Entity* ent) {
+    ents.push_back(ent);
 }
 
 void Game::setCaption(const char* cap) {
@@ -133,7 +88,6 @@ void Game::setCaption(const char* cap) {
 void Game::run() {
     int before, after, diff;
     SDL_Event evt;
-    Entity* itr;
 
     if (!initialized) {
         printf("Error: not initialized\n");
@@ -158,10 +112,20 @@ void Game::run() {
         }
 
         // logic step
-        itr = first;
-        while (itr != 0) {
-            itr->step(*this, 1.f/60);
-            itr = itr->next;
+        for (EntityList::iterator itr = ents.begin(); itr != ents.end();) {
+            if ((*itr)->removeMe) {
+                itr = ents.erase(itr);
+                continue;
+            }
+
+            (*itr)->step(*this, 1.f/60);
+
+            if ((*itr)->removeMe) {
+                itr = ents.erase(itr);
+                continue;
+            }
+
+            itr++;
         }
 
         // draw step
@@ -170,10 +134,9 @@ void Game::run() {
         glLoadIdentity();
         glOrtho(0, internalWidth, internalHeight, 0, -1, 1);
 
-        itr = first;
-        while (itr != 0) {
-            itr->draw(*this, g);
-            itr = itr->next;
+        // logic step
+        for (EntityList::iterator itr = ents.begin(); itr != ents.end(); itr++) {
+            (*itr)->draw(*this, g);
         }
 
         SDL_GL_SwapBuffers();

@@ -29,16 +29,15 @@
 #include "Graphics.h"
 #include <cstdio>
 
-Player::Player() : Entity(0, 0) {
+Player::Player() : Entity(Vector2f()) {
 
 }
 
 void Player::create(Game& game) {
-    printf("burp\n");
+
 }
 
 void Player::step(Game& game, float delta) {
-    //printf("burp\n");
     position.x += 32 * delta;
 }
 
